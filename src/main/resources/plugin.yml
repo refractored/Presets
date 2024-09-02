@@ -1,0 +1,10 @@
+name: ItemPopulator
+version: '1.0'
+main: net.refractored.itemPopulator.ItemPopulator
+api-version: '1.21'
+author: refractored
+depend:
+  - Essentials
+softdepend:
+  - ItemsAdder
+  - eco
