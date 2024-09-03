@@ -75,6 +75,12 @@ object Presets {
                 ItemPopulator.instance.logger.severe("Presets cannot be the same name as a existing minecraft material! ($key)")
                 continue
             }
+            if (ItemPopulator.instance.essentials.itemDb
+                    .get(key, false) != null
+            ) {
+                ItemPopulator.instance.logger.severe("Presets cannot be the same name as a existing Essentials item! ($key)")
+                continue
+            }
             createPreset(key, config.getItemStack(key)!!)
         }
     }
