@@ -3,16 +3,15 @@ package net.refractored.itemPopulator.commands
 import net.kyori.adventure.text.minimessage.MiniMessage
 import net.refractored.itemPopulator.presets.Presets
 import org.bukkit.Material
-import revxrsal.commands.bukkit.BukkitCommandActor
-import revxrsal.commands.bukkit.player
-import revxrsal.commands.exception.CommandErrorException
 import revxrsal.commands.annotation.Command
 import revxrsal.commands.annotation.Description
+import revxrsal.commands.bukkit.BukkitCommandActor
 import revxrsal.commands.bukkit.annotation.CommandPermission
+import revxrsal.commands.bukkit.player
+import revxrsal.commands.exception.CommandErrorException
 
 class CreatePreset {
-
-    @CommandPermission("joblistings.admin.create.preset")
+    @CommandPermission("itempopulator.create.preset")
     @Description("Adds a preset to the config and memory.")
     @Command("itempopulator preset create")
     fun createPreset(
@@ -53,6 +52,4 @@ class CreatePreset {
             ),
         )
     }
-
-
 }

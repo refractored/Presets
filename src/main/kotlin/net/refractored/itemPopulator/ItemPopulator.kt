@@ -1,21 +1,21 @@
 package net.refractored.itemPopulator
 
 import com.earth2me.essentials.Essentials
-import net.refractored.itemPopulator.commands.CreatePreset
-import net.refractored.itemPopulator.commands.ImportPresets
-import net.refractored.itemPopulator.commands.ReloadPlugin
+import net.refractored.itemPopulator.commands.*
 import net.refractored.itemPopulator.itemResolver.ItemResolver
 import net.refractored.itemPopulator.presets.Presets
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
 import revxrsal.commands.bukkit.BukkitCommandHandler
+import revxrsal.commands.command.CommandActor
+import revxrsal.commands.command.ExecutableCommand
 import java.io.File
 
 class ItemPopulator : JavaPlugin() {
     /**
-    * The preset configuration
-    */
+     * The preset configuration
+     */
     lateinit var presets: FileConfiguration
         private set
 
@@ -30,7 +30,6 @@ class ItemPopulator : JavaPlugin() {
      */
     var itemsAdder: Boolean = false
         private set
-
 
     /**
      * Essentials
@@ -72,14 +71,23 @@ class ItemPopulator : JavaPlugin() {
 
         handler = BukkitCommandHandler.create(this)
 
+        handler.autoCompleter.registerSuggestion(
+            "presets",
+        ) { args: List<String?>?, sender: CommandActor?, command: ExecutableCommand? ->
+            return@registerSuggestion Presets
+                .getPresets()
+                .keys
+        }
+
         handler.register(ReloadPlugin())
         handler.register(ImportPresets())
         handler.register(CreatePreset())
+        handler.register(GetPreset())
+        handler.register(RemovePreset())
 
         handler.registerBrigadier()
 
         essentials.itemDb.registerResolver(this, "ItemPopulator", ItemResolver())
-
     }
 
     override fun onDisable() {
@@ -88,10 +96,9 @@ class ItemPopulator : JavaPlugin() {
         }
     }
 
-    fun reload(){
+    fun reload() {
         essentials.itemDb.unregisterResolver(this, "ItemPopulator")
         Presets.refreshPresets()
-
     }
 
     companion object {

@@ -10,12 +10,12 @@ group = "net.refractored"
 version = "1.0"
 
 repositories {
-    maven ( "https://repo.essentialsx.net/releases/") {
+    maven("https://repo.essentialsx.net/releases/") {
         name = "essentialsx"
     }
     mavenCentral()
 
-    maven ("https://repo.papermc.io/repository/maven-public/")
+    maven("https://repo.papermc.io/repository/maven-public/")
 
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") {
         name = "spigotmc-repo"
@@ -26,7 +26,7 @@ repositories {
 
     maven("https://repo.auxilor.io/repository/maven-public/")
 
-    maven ("https://jitpack.io"){
+    maven("https://jitpack.io") {
         name = "jitpack"
     }
 }
@@ -58,9 +58,8 @@ kotlin {
     jvmToolchain(targetJavaVersion)
 }
 
-
-tasks.withType<ShadowJar>{
-    archiveFileName = "ItemPopulator-${version}.jar"
+tasks.withType<ShadowJar> {
+    archiveFileName = "ItemPopulator-$version.jar"
 //    reloc('kotlin', 'net.refractored.libs.kotlin')
 //    relocate("org.bstats", "net.refractored.libs.bstats")
 }
