@@ -1,7 +1,7 @@
-package net.refractored.itemPopulator.commands
+package net.refractored.presets.commands
 
 import net.kyori.adventure.text.minimessage.MiniMessage
-import net.refractored.itemPopulator.presets.Presets
+import net.refractored.presets.presets.Presets
 import org.bukkit.Material
 import revxrsal.commands.annotation.Command
 import revxrsal.commands.annotation.Description
@@ -11,9 +11,9 @@ import revxrsal.commands.bukkit.player
 import revxrsal.commands.exception.CommandErrorException
 
 class CreatePreset {
-    @CommandPermission("itempopulator.create.preset")
+    @CommandPermission("presets.create.preset")
     @Description("Adds a preset to the config and memory.")
-    @Command("itempopulator preset create")
+    @Command("presets preset create")
     fun createPreset(
         actor: BukkitCommandActor,
         presetName: String,

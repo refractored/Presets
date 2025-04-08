@@ -1,9 +1,10 @@
-package net.refractored.itemPopulator
+package net.refractored.presets
 
 import com.earth2me.essentials.Essentials
-import net.refractored.itemPopulator.commands.*
-import net.refractored.itemPopulator.itemResolver.ItemResolver
-import net.refractored.itemPopulator.presets.Presets
+import net.refractored.presets.commands.*
+import net.refractored.presets.itemResolver.EcoResolver
+import net.refractored.presets.itemResolver.EssentialsResolver
+import net.refractored.presets.presets.Presets
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
@@ -12,7 +13,7 @@ import revxrsal.commands.command.CommandActor
 import revxrsal.commands.command.ExecutableCommand
 import java.io.File
 
-class ItemPopulator : JavaPlugin() {
+class PresetsPlugin : JavaPlugin() {
     /**
      * The preset configuration
      */
@@ -34,7 +35,7 @@ class ItemPopulator : JavaPlugin() {
     /**
      * Essentials
      */
-    lateinit var essentials: Essentials
+    var essentials: Essentials? = null
         private set
 
     /**
@@ -45,19 +46,19 @@ class ItemPopulator : JavaPlugin() {
     override fun onEnable() {
         instance = this
 
-        server.pluginManager.getPlugin("Essentials").let {
-            essentials = (it as Essentials)
-            logger.info("Hooked into Essentials")
+        server.pluginManager.getPlugin("Essentials")?.let {
+            essentials = (it as? Essentials)
         }
 
         server.pluginManager.getPlugin("eco")?.let {
             ecoPlugin = true
-            logger.info("Hooked into eco")
+            if (config.getBoolean("integration.eco.enabled")) {
+                EcoResolver().registerProvider()
+            }
         }
 
         server.pluginManager.getPlugin("ItemsAdder")?.let {
             itemsAdder = true
-            logger.info("Hooked into ItemsAdder")
         }
 
         if (!File(dataFolder, "presets.yml").exists()) {
@@ -87,7 +88,9 @@ class ItemPopulator : JavaPlugin() {
 
         handler.registerBrigadier()
 
-        essentials.itemDb.registerResolver(this, "ItemPopulator", ItemResolver())
+        if (config.getBoolean("integration.essentials.enabled")) {
+            essentials?.itemDb?.registerResolver(this, "ItemPopulator", EssentialsResolver())
+        }
     }
 
     override fun onDisable() {
@@ -97,13 +100,15 @@ class ItemPopulator : JavaPlugin() {
     }
 
     fun reload() {
-        essentials.itemDb.unregisterResolver(this, "ItemPopulator")
+        if (config.getBoolean("integration.essentials.enabled")) {
+            essentials?.itemDb?.registerResolver(this, "ItemPopulator", EssentialsResolver())
+        }
         Presets.refreshPresets()
     }
 
     companion object {
         @JvmStatic
-        lateinit var instance: ItemPopulator
+        lateinit var instance: PresetsPlugin
             private set
     }
 }

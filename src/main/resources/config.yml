@@ -1,0 +1,19 @@
+#
+# Presets
+# by refractored
+#
+# Plugins to import presets from.
+# If the plugin is not loaded, this won't do anything.
+import:
+  eco: true
+  ItemsAdder: true
+  Nexo: true
+# You will be able to use the presets made from this plugin.
+integration:
+  eco:
+    enabled: true
+  # This adds supports for essentials' give command
+  essentials:
+    enabled: true
+    # If presets from other imported plugins should be added to the give command.
+    other-plugins: true

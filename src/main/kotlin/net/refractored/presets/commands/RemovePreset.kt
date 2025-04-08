@@ -1,7 +1,7 @@
-package net.refractored.itemPopulator.commands
+package net.refractored.presets.commands
 
 import net.kyori.adventure.text.minimessage.MiniMessage
-import net.refractored.itemPopulator.presets.Presets
+import net.refractored.presets.presets.Presets
 import revxrsal.commands.annotation.AutoComplete
 import revxrsal.commands.annotation.Command
 import revxrsal.commands.annotation.Description

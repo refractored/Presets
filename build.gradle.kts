@@ -3,7 +3,7 @@ import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 plugins {
     kotlin("jvm") version "2.0.20"
     java
-    id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("com.gradleup.shadow") version "8.3.5"
 }
 
 group = "net.refractored"
@@ -29,13 +29,20 @@ repositories {
     maven("https://jitpack.io") {
         name = "jitpack"
     }
+
+    maven("https://repo.nexomc.com/releases") {
+        name = "nexo"
+    }
 }
 
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.21.1-R0.1-SNAPSHOT")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib:2.0.0")
 
-    compileOnly("com.willfp:eco:6.70.1")
+    compileOnly(kotlin("stdlib", version = "2.1.0"))
+
+    compileOnly("com.nexomc:nexo:1.1.0")
+
+    compileOnly("com.willfp:eco:6.75.2")
     compileOnly("com.github.LoneDev6:API-ItemsAdder:3.6.3-beta-14")
 
     // Lamp (Commands)
@@ -50,7 +57,7 @@ dependencies {
     implementation("org.bstats:bstats-bukkit:3.0.2")
 
     // EssentialsX (Economy)
-    compileOnly("net.essentialsx:EssentialsX:2.20.1")
+    compileOnly("net.essentialsx:EssentialsX:2.21.0")
 }
 
 val targetJavaVersion = 21
@@ -60,7 +67,8 @@ kotlin {
 
 tasks.withType<ShadowJar> {
     archiveFileName = "ItemPopulator-$version.jar"
-//    reloc('kotlin', 'net.refractored.libs.kotlin')
+    relocate("kotlin", "net.refractored.libs.kotlin")
+    relocate("revxrsal.commands", "net.refractored.libs.lamp")
 //    relocate("org.bstats", "net.refractored.libs.bstats")
 }
 

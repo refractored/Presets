@@ -1,10 +1,9 @@
-name: ItemPopulator
-version: '1.0'
-main: net.refractored.itemPopulator.ItemPopulator
-api-version: '1.21'
+name: Presets
+version: '1.1'
+main: net.refractored.presets.PresetsPlugin
+api-version: '1.21.1'
 author: refractored
-depend:
-  - Essentials
 softdepend:
+  - Essentials
   - ItemsAdder
   - eco
