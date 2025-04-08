@@ -13,7 +13,7 @@ import revxrsal.commands.exception.CommandErrorException
 class CreatePreset {
     @CommandPermission("presets.create.preset")
     @Description("Adds a preset to the config and memory.")
-    @Command("presets preset create")
+    @Command("presets create")
     fun createPreset(
         actor: BukkitCommandActor,
         presetName: String,

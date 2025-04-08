@@ -16,7 +16,7 @@ import revxrsal.commands.exception.CommandErrorException
 class ImportPresets {
     @CommandPermission("presets.import")
     @Description("Imports items from other plugins.")
-    @Command("presets preset import")
+    @Command("presets import")
     @AutoComplete("enchants")
     fun importItems(
         actor: BukkitCommandActor,

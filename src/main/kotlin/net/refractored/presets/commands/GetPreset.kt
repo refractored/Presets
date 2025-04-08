@@ -13,7 +13,7 @@ import revxrsal.commands.exception.CommandErrorException
 class GetPreset {
     @CommandPermission("joblistings.admin.get.preset")
     @Description("Gets the item for the preset.")
-    @Command("joblistings preset get")
+    @Command("presets get")
     @AutoComplete("@presets")
     fun presetGet(
         actor: BukkitCommandActor,

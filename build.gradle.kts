@@ -38,7 +38,7 @@ repositories {
 dependencies {
     compileOnly("org.spigotmc:spigot-api:1.21.1-R0.1-SNAPSHOT")
 
-    compileOnly(kotlin("stdlib", version = "2.1.0"))
+    implementation(kotlin("stdlib", version = "2.1.0"))
 
     compileOnly("com.nexomc:nexo:1.1.0")
 

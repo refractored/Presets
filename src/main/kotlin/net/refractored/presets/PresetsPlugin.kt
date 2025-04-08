@@ -46,6 +46,8 @@ class PresetsPlugin : JavaPlugin() {
     override fun onEnable() {
         instance = this
 
+        saveDefaultConfig()
+
         server.pluginManager.getPlugin("Essentials")?.let {
             essentials = (it as? Essentials)
         }
@@ -89,7 +91,7 @@ class PresetsPlugin : JavaPlugin() {
         handler.registerBrigadier()
 
         if (config.getBoolean("integration.essentials.enabled")) {
-            essentials?.itemDb?.registerResolver(this, "ItemPopulator", EssentialsResolver())
+            essentials?.itemDb?.registerResolver(this, "Presets", EssentialsResolver())
         }
     }
 
@@ -100,6 +102,7 @@ class PresetsPlugin : JavaPlugin() {
     }
 
     fun reload() {
+        reloadConfig()
         if (config.getBoolean("integration.essentials.enabled")) {
             essentials?.itemDb?.registerResolver(this, "ItemPopulator", EssentialsResolver())
         }

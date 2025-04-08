@@ -12,7 +12,7 @@ import revxrsal.commands.exception.CommandErrorException
 class RemovePreset {
     @CommandPermission("joblistings.admin.remove.preset")
     @Description("Removes a preset from the config and memory.")
-    @Command("joblistings preset remove")
+    @Command("presets remove")
     @AutoComplete("@presets")
     fun removePreset(
         actor: BukkitCommandActor,
@@ -23,7 +23,7 @@ class RemovePreset {
                 "This command can only be run by players.",
             )
         }
-        if (Presets.getPresets()[presetName] == null) {
+        if (Presets.getPreset(presetName) == null) {
             throw CommandErrorException(
                 "Preset does not exist.",
             )

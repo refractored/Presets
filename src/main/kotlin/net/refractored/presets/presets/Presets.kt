@@ -2,6 +2,7 @@ package net.refractored.presets.presets
 
 import com.willfp.eco.core.items.Items
 import dev.lone.itemsadder.api.ItemsAdder
+import net.ess3.api.TranslatableException
 import net.refractored.presets.PresetsPlugin
 import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
@@ -36,11 +37,24 @@ object Presets {
         item: ItemStack,
         saveInConfig: Boolean = true,
     ) {
-        if (getPreset(name) == null) {
+        if (getPreset(name) != null) {
             throw IllegalArgumentException("Preset already exists.")
         }
         if (Material.entries.any { it.name.equals(name, true) }) {
-            throw IllegalArgumentException("Presets cannot be the same name as a existing minecraft material! ($name)")
+            throw IllegalArgumentException("Presets cannot be the same name as a existing minecraft material")
+        }
+        if (PresetsPlugin.instance.config.getBoolean("intergrations.essentials.enabled")) {
+            val essentialsStack =
+                try {
+                    PresetsPlugin.instance.essentials
+                        ?.itemDb
+                        ?.get(name, false)
+                } catch (_: TranslatableException) {
+                    null
+                }
+            if (essentialsStack != null) {
+                throw IllegalArgumentException("Presets cannot be the same name as a existing Essentials item")
+            }
         }
         PresetsPlugin.instance.presets.set(name, item)
         if (saveInConfig) {
@@ -75,18 +89,12 @@ object Presets {
         val keys = section!!.getKeys(false)
         if (keys.isEmpty()) return
         for (key in keys) {
-            if (Material.entries.any { it.name.equals(key, true) }) {
-                PresetsPlugin.instance.logger.severe("Presets cannot be the same name as a existing minecraft material! ($key)")
+            try {
+                createPreset(key, config.getItemStack(key)!!)
+            } catch (exception: Exception) {
+                PresetsPlugin.instance.logger.warning("Failed to load preset \"${key}\": ${exception.message}")
                 continue
             }
-            if (PresetsPlugin.instance.essentials
-                    ?.itemDb
-                    ?.get(key, false) != null
-            ) {
-                PresetsPlugin.instance.logger.severe("Presets cannot be the same name as a existing Essentials item! ($key)")
-                continue
-            }
-            createPreset(key, config.getItemStack(key)!!)
         }
 
         if (PresetsPlugin.instance.itemsAdder && config.getBoolean("import.ItemsAdder")) {
