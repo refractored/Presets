@@ -10,7 +10,7 @@ import revxrsal.commands.bukkit.annotation.CommandPermission
 import revxrsal.commands.exception.CommandErrorException
 
 class RemovePreset {
-    @CommandPermission("joblistings.admin.remove.preset")
+    @CommandPermission("presets.remove.preset")
     @Description("Removes a preset from the config and memory.")
     @Command("presets remove")
     @AutoComplete("@presets")

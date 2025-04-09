@@ -1,1 +1,1 @@
-rootProject.name = "ItemPopulator"
+rootProject.name = "Presets"

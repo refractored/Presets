@@ -1,4 +1,4 @@
-package net.refractored.presets.itemResolver
+package net.refractored.presets.resolver
 
 import net.ess3.api.IItemDb.ItemResolver
 import net.refractored.presets.PresetsPlugin

@@ -8,7 +8,6 @@ import org.bukkit.Material
 import org.bukkit.inventory.ItemStack
 
 object Presets {
-    @JvmStatic
     private val presets: MutableMap<String, Preset> = mutableMapOf()
 
     /**
@@ -18,6 +17,20 @@ object Presets {
      */
     @JvmStatic
     fun getPreset(name: String): Preset? = presets[name]
+
+    /**
+     * Gets a preset from the loaded presets
+     * @param item The itemstack for the preset
+     * @return The itemstack for the preset, or null if it does not exist
+     */
+    fun getPreset(item: ItemStack): Preset? {
+        for (preset in presets) {
+            if (preset.value.item == item) {
+                return preset.value
+            }
+        }
+        return null
+    }
 
     /**
      * Gets a read-only map of all the presets loaded.

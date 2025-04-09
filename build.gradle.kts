@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "net.refractored"
-version = "1.0"
+version = "1.1"
 
 repositories {
     maven("https://repo.essentialsx.net/releases/") {
@@ -66,7 +66,7 @@ kotlin {
 }
 
 tasks.withType<ShadowJar> {
-    archiveFileName = "ItemPopulator-$version.jar"
+    archiveFileName = "Presets-$version.jar"
     relocate("kotlin", "net.refractored.libs.kotlin")
     relocate("revxrsal.commands", "net.refractored.libs.lamp")
 //    relocate("org.bstats", "net.refractored.libs.bstats")

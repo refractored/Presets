@@ -11,7 +11,7 @@ import revxrsal.commands.bukkit.player
 import revxrsal.commands.exception.CommandErrorException
 
 class GetPreset {
-    @CommandPermission("joblistings.admin.get.preset")
+    @CommandPermission("presets.get.preset")
     @Description("Gets the item for the preset.")
     @Command("presets get")
     @AutoComplete("@presets")

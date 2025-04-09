@@ -2,9 +2,9 @@ package net.refractored.presets
 
 import com.earth2me.essentials.Essentials
 import net.refractored.presets.commands.*
-import net.refractored.presets.itemResolver.EcoResolver
-import net.refractored.presets.itemResolver.EssentialsResolver
 import net.refractored.presets.presets.Presets
+import net.refractored.presets.resolver.EcoResolver
+import net.refractored.presets.resolver.EssentialsResolver
 import org.bukkit.configuration.file.FileConfiguration
 import org.bukkit.configuration.file.YamlConfiguration
 import org.bukkit.plugin.java.JavaPlugin
@@ -67,7 +67,6 @@ class PresetsPlugin : JavaPlugin() {
             saveResource("presets.yml", false)
         }
 
-        // Load messages config
         presets = YamlConfiguration.loadConfiguration(dataFolder.resolve("presets.yml"))
 
         Presets.refreshPresets()
@@ -76,7 +75,7 @@ class PresetsPlugin : JavaPlugin() {
 
         handler.autoCompleter.registerSuggestion(
             "presets",
-        ) { args: List<String?>?, sender: CommandActor?, command: ExecutableCommand? ->
+        ) { _: List<String?>?, _: CommandActor?, _: ExecutableCommand? ->
             return@registerSuggestion Presets
                 .getPresets()
                 .keys
@@ -104,7 +103,7 @@ class PresetsPlugin : JavaPlugin() {
     fun reload() {
         reloadConfig()
         if (config.getBoolean("integration.essentials.enabled")) {
-            essentials?.itemDb?.registerResolver(this, "ItemPopulator", EssentialsResolver())
+            essentials?.itemDb?.registerResolver(this, "Presets", EssentialsResolver())
         }
         Presets.refreshPresets()
     }

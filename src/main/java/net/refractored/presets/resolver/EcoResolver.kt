@@ -1,4 +1,4 @@
-package net.refractored.presets.itemResolver
+package net.refractored.presets.resolver
 
 import com.willfp.eco.core.integrations.customitems.CustomItemsIntegration
 import com.willfp.eco.core.items.CustomItem
@@ -13,10 +13,10 @@ class EcoResolver : CustomItemsIntegration {
     private class Provider : ItemProvider("presets") {
         override fun provideForKey(key: String): TestableItem? {
             val item = Presets.getPreset(key) ?: return null
-            val namespacedKey = NamespacedKeyUtils.create("nexo", key.toString())
+            val namespacedKey = NamespacedKeyUtils.create("nexo", key)
             return CustomItem(
                 namespacedKey,
-                { true },
+                { it.isSimilar(item.item) },
                 item.item,
             )
         }
