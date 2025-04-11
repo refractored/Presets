@@ -8,6 +8,8 @@ import org.bukkit.inventory.ItemStack
 class EssentialsResolver : ItemResolver {
     override fun getNames(): MutableCollection<String> = Presets.getPresets().keys.toMutableList()
 
+    override fun serialize(stack: ItemStack?): String? = stack?.let { Presets.getID(it) }
+
     override fun apply(name: String): ItemStack? {
         val preset = Presets.getPreset(name) ?: return null
         if (!PresetsPlugin.instance.config.getBoolean("integration.essentials.other-plugins") && !preset.fromConfig) {

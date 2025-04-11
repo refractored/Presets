@@ -56,7 +56,7 @@ class ImportPresets {
 
                 enchantedBook.itemMeta = enchantedBookMeta
 
-                enchantedBooks["enchanted_book_" + "${enchant.keyOrThrow.key.lowercase()}_$level"] = enchantedBook
+                enchantedBooks["enchanted_book_" + "${enchant.key.toString().lowercase()}_$level"] = enchantedBook
             }
         }
 

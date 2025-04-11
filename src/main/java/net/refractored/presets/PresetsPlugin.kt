@@ -48,6 +48,14 @@ class PresetsPlugin : JavaPlugin() {
 
         saveDefaultConfig()
 
+        if (!File(dataFolder, "presets.yml").exists()) {
+            saveResource("presets.yml", false)
+        }
+
+        presets = YamlConfiguration.loadConfiguration(dataFolder.resolve("presets.yml"))
+
+        Presets.refreshPresets()
+
         server.pluginManager.getPlugin("Essentials")?.let {
             essentials = (it as? Essentials)
         }
@@ -62,14 +70,6 @@ class PresetsPlugin : JavaPlugin() {
         server.pluginManager.getPlugin("ItemsAdder")?.let {
             itemsAdder = true
         }
-
-        if (!File(dataFolder, "presets.yml").exists()) {
-            saveResource("presets.yml", false)
-        }
-
-        presets = YamlConfiguration.loadConfiguration(dataFolder.resolve("presets.yml"))
-
-        Presets.refreshPresets()
 
         handler = BukkitCommandHandler.create(this)
 

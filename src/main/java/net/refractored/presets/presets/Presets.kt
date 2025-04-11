@@ -13,7 +13,7 @@ object Presets {
     /**
      * Gets a preset from the loaded presets
      * @param name The name of the preset
-     * @return The itemstack for the preset, or null if it does not exist
+     * @return The preset, or null if it does not exist
      */
     @JvmStatic
     fun getPreset(name: String): Preset? = presets[name]
@@ -21,7 +21,7 @@ object Presets {
     /**
      * Gets a preset from the loaded presets
      * @param item The itemstack for the preset
-     * @return The itemstack for the preset, or null if it does not exist
+     * @return The preset, or null if it does not exist
      */
     fun getPreset(item: ItemStack): Preset? {
         for (preset in presets) {
@@ -33,10 +33,23 @@ object Presets {
     }
 
     /**
+     * Gets a preset from the loaded presets
+     * @param item The itemstack for the preset
+     * @return The ID of the preset, or null if it does not exist
+     */
+    fun getID(item: ItemStack): String? {
+        for (preset in presets) {
+            if (preset.value.item == item) {
+                return preset.key
+            }
+        }
+        return null
+    }
+
+    /**
      * Gets a read-only map of all the presets loaded.
      * @return The mutable preset list
      */
-    @JvmStatic
     fun getPresets() = presets.toMap()
 
     /**
@@ -44,7 +57,6 @@ object Presets {
      * @param name The name of the preset
      * @param item The itemstack for the preset
      */
-    @JvmStatic
     fun createPreset(
         name: String,
         item: ItemStack,
@@ -69,11 +81,13 @@ object Presets {
                 throw IllegalArgumentException("Presets cannot be the same name as a existing Essentials item")
             }
         }
-        PresetsPlugin.instance.presets.set(name, item)
         if (saveInConfig) {
+            PresetsPlugin.instance.presets.set(name, item)
             PresetsPlugin.instance.presets.save(PresetsPlugin.instance.dataFolder.resolve("presets.yml"))
+            presets[name] = Preset(item)
+            return
         }
-        presets[name] = Preset(item)
+        presets[name] = Preset(item, false)
     }
 
     /**
@@ -81,7 +95,6 @@ object Presets {
      * @return The itemstack that was created
      * @param name The name of the preset
      */
-    @JvmStatic
     fun removePreset(name: String) {
         if (presets.contains(name)) {
             throw IllegalArgumentException("Preset does not exist.")
@@ -94,7 +107,6 @@ object Presets {
     /**
      * Deletes all presets in the map and populates it with the presets in the config.
      */
-    @JvmStatic
     fun refreshPresets() {
         presets.clear()
         val config = PresetsPlugin.instance.presets

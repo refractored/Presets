@@ -43,6 +43,7 @@ dependencies {
     compileOnly("com.nexomc:nexo:1.1.0")
 
     compileOnly("com.willfp:eco:6.75.2")
+
     compileOnly("com.github.LoneDev6:API-ItemsAdder:3.6.3-beta-14")
 
     // Lamp (Commands)
@@ -56,7 +57,7 @@ dependencies {
     // BStats (Metrics)
     implementation("org.bstats:bstats-bukkit:3.0.2")
 
-    // EssentialsX (Economy)
+    // EssentialsX
     compileOnly("net.essentialsx:EssentialsX:2.21.0")
 }
 
